@@ -1,0 +1,1126 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NeuralPeak — Treino Cognitivo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="icon" href="static/img/system.png">
+<link rel="stylesheet" href="static/css/index.css">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+
+</head>
+<body>
+
+<div class="app-shell">
+  <!-- SIDEBAR -->
+  <nav class="sidebar">
+    <div class="sidebar-logo">Neural<br>Peak</div>
+    <button class="nav-btn active" onclick="showScreen('dashboard')" title="Dashboard">
+      🧠<span class="tooltip">Dashboard</span>
+    </button>
+    <button class="nav-btn" onclick="showScreen('schedule')" title="Rotina">
+      📅<span class="tooltip">Rotina Diária</span>
+    </button>
+    <button class="nav-btn" onclick="showScreen('breathing')" title="Meditação">
+      🌬<span class="tooltip">Respiração</span>
+    </button>
+    <button class="nav-btn" onclick="showScreen('math')" title="Velocidade Mental">
+      ⚡<span class="tooltip">Cálculo Mental</span>
+    </button>
+    <button class="nav-btn" onclick="showScreen('flashcards')" title="Flashcards">
+      🃏<span class="tooltip">Flashcards</span>
+    </button>
+    <button class="nav-btn" onclick="showScreen('memory')" title="Memória">
+      🗂<span class="tooltip">Memória</span>
+    </button>
+    <button class="nav-btn" onclick="showScreen('typing')" title="Digitação">
+      ⌨️<span class="tooltip">Digitação</span>
+    </button>
+    <button class="nav-btn" onclick="showScreen('sudoku')" title="Sudoku">
+      🧩<span class="tooltip">Sudoku</span>
+    </button>
+    <button class="nav-btn" onclick="showScreen('creativity')" title="Criatividade">
+      💡<span class="tooltip">Criatividade</span>
+    </button>
+    <div class="sidebar-spacer"></div>
+    <button class="nav-btn" onclick="showScreen('stats')" title="Progresso">
+      📊<span class="tooltip">Progresso</span>
+    </button>
+  </nav>
+
+  <!-- MAIN CONTENT -->
+  <main class="main">
+
+    <!-- ═══ DASHBOARD ═══ -->
+    <div id="screen-dashboard" class="screen active">
+      <div class="hero-banner">
+        <div class="hero-time" id="hero-time">00:00</div>
+        <div class="hero-greeting">Bom dia, Atleta Mental 🧠</div>
+        <div class="hero-quote" id="daily-quote">"O cérebro que não é exercitado enferruja. Treine-o como um músculo."</div>
+        <div class="schedule-strip">
+          <div class="schedule-item" onclick="showScreen('breathing')"><div class="dot" style="background:#00E5FF"></div> Meditação</div>
+          <div class="schedule-item" onclick="showScreen('math')"><div class="dot" style="background:#7C4DFF"></div> Cálculo</div>
+          <div class="schedule-item" onclick="showScreen('flashcards')"><div class="dot" style="background:#00E676"></div> Flashcards</div>
+          <div class="schedule-item" onclick="showScreen('sudoku')"><div class="dot" style="background:#FF6B35"></div> Lógica</div>
+          <div class="schedule-item" onclick="showScreen('creativity')"><div class="dot" style="background:#FF3D71"></div> Criatividade</div>
+        </div>
+      </div>
+
+      <div class="stat-grid">
+        <div class="stat-card">
+          <div class="stat-val" style="color:var(--accent)" id="stat-streak">0</div>
+          <div class="stat-label">Dias Seguidos</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-val" style="color:var(--accent2)" id="stat-sessions">0</div>
+          <div class="stat-label">Sessões Hoje</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-val" style="color:var(--accent3)" id="stat-math-best">0</div>
+          <div class="stat-label">Recorde Cálculo</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-val" style="color:var(--accent4)" id="stat-wpm-best">0</div>
+          <div class="stat-label">Recorde WPM</div>
+        </div>
+      </div>
+
+      <div class="module-grid">
+        <div class="module-card" style="--mod-color:var(--accent)" onclick="showScreen('breathing')">
+          <div class="module-icon">🌬️</div>
+          <div class="module-name">Atenção & Clareza</div>
+          <div class="module-time">10 min · Respiração + Meditação</div>
+          <div class="module-bar"><div class="progress-bar"><div class="progress-fill" id="prog-breath" style="width:0%"></div></div></div>
+        </div>
+        <div class="module-card" style="--mod-color:var(--accent2)" onclick="showScreen('math')">
+          <div class="module-icon">⚡</div>
+          <div class="module-name">Velocidade Mental</div>
+          <div class="module-time">10 min · Cálculo + Digitação</div>
+          <div class="module-bar"><div class="progress-bar"><div class="progress-fill" id="prog-math" style="width:0%"></div></div></div>
+        </div>
+        <div class="module-card" style="--mod-color:var(--accent4)" onclick="showScreen('flashcards')">
+          <div class="module-icon">🃏</div>
+          <div class="module-name">Memória Ativa</div>
+          <div class="module-time">15 min · Flashcards + Listas</div>
+          <div class="module-bar"><div class="progress-bar"><div class="progress-fill" id="prog-mem" style="width:0%"></div></div></div>
+        </div>
+        <div class="module-card" style="--mod-color:var(--accent3)" onclick="showScreen('sudoku')">
+          <div class="module-icon">🧩</div>
+          <div class="module-name">Raciocínio Lógico</div>
+          <div class="module-time">30 min · Sudoku + Problemas</div>
+          <div class="module-bar"><div class="progress-bar"><div class="progress-fill" id="prog-logic" style="width:0%"></div></div></div>
+        </div>
+        <div class="module-card" style="--mod-color:var(--accent)" onclick="showScreen('typing')">
+          <div class="module-icon">⌨️</div>
+          <div class="module-name">Digitação Rápida</div>
+          <div class="module-time">5 min · Velocidade + Precisão</div>
+          <div class="module-bar"><div class="progress-bar"><div class="progress-fill" id="prog-type" style="width:0%"></div></div></div>
+        </div>
+        <div class="module-card" style="--mod-color:var(--danger)" onclick="showScreen('creativity')">
+          <div class="module-icon">💡</div>
+          <div class="module-name">Criatividade</div>
+          <div class="module-time">20 min · 10 Ideias</div>
+          <div class="module-bar"><div class="progress-bar"><div class="progress-fill" id="prog-create" style="width:0%"></div></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ SCHEDULE ═══ -->
+    <div id="screen-schedule" class="screen">
+      <div class="page-header">
+        <div class="page-label">Rotina</div>
+        <div class="page-title">Treino Cognitivo Diário</div>
+        <div class="page-sub">Siga a estrutura ideal para maximizar seu desempenho mental.</div>
+      </div>
+      <div class="schedule-list" id="schedule-list"></div>
+    </div>
+
+    <!-- ═══ BREATHING ═══ -->
+    <div id="screen-breathing" class="screen">
+      <div class="page-header">
+        <div class="page-label">Módulo 2</div>
+        <div class="page-title">Atenção & Clareza Mental</div>
+        <div class="page-sub">Respiração 4-4-6-2 · Reduz cortisol · Melhora foco</div>
+      </div>
+      <div class="breath-center">
+        <div class="grid-2" style="max-width:500px;margin-bottom:24px">
+          <div class="card card-accent">
+            <div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px">Técnica</div>
+            <div style="font-weight:600">Respiração 4-4-6-2</div>
+            <div style="font-size:13px;color:var(--muted);margin-top:4px">Inspire 4s → Segure 4s → Expire 6s → Pause 2s</div>
+          </div>
+          <div class="card card-accent2">
+            <div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px">Benefícios</div>
+            <div style="font-weight:600">Foco & Calma</div>
+            <div style="font-size:13px;color:var(--muted);margin-top:4px">Ativa sistema nervoso parassimpático</div>
+          </div>
+        </div>
+        <div class="breath-circle-wrap">
+          <div class="breath-ring" id="breath-ring" style="--dur:4s"></div>
+          <div class="breath-inner">
+            <div class="breath-phase" id="breath-phase">Pronto</div>
+            <div class="breath-count" id="breath-count">–</div>
+          </div>
+        </div>
+        <div class="breath-cycle-info">Ciclo <span id="breath-cycle">0</span> / 10</div>
+        <div style="display:flex;gap:12px;margin-top:24px">
+          <button class="btn btn-primary btn-lg" id="breath-btn" onclick="toggleBreathing()">▶ Iniciar</button>
+          <button class="btn btn-secondary" onclick="resetBreathing()">↺ Reiniciar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ MATH ═══ -->
+    <div id="screen-math" class="screen">
+      <div class="page-header">
+        <div class="page-label">Módulo 3</div>
+        <div class="page-title">Velocidade Mental</div>
+        <div class="page-sub">Responda o mais rápido possível. 60 segundos. Cada acerto = +1 ponto.</div>
+      </div>
+      <div class="math-arena">
+        <div class="math-timer-bar"><div class="math-timer-fill" id="math-timer-fill" style="width:100%"></div></div>
+        <div class="math-question" id="math-q">?</div>
+        <input type="number" class="math-input" id="math-input" placeholder="?" autocomplete="off" onkeydown="mathKeydown(event)" disabled>
+        <div class="math-score-row">
+          <div class="score-item"><div class="score-val" style="color:var(--accent4)" id="math-correct">0</div><div class="score-lbl">Acertos</div></div>
+          <div class="score-item"><div class="score-val" style="color:var(--danger)" id="math-wrong">0</div><div class="score-lbl">Erros</div></div>
+          <div class="score-item"><div class="score-val" style="color:var(--accent)" id="math-time">60</div><div class="score-lbl">Segundos</div></div>
+          <div class="score-item"><div class="score-val" style="color:var(--accent2)" id="math-streak">0</div><div class="score-lbl">Sequência</div></div>
+        </div>
+        <div style="text-align:center;margin-top:20px">
+          <button class="btn btn-primary btn-lg" id="math-start-btn" onclick="startMath()">▶ Iniciar (60s)</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ FLASHCARDS ═══ -->
+    <div id="screen-flashcards" class="screen">
+      <div class="page-header">
+        <div class="page-label">Módulo 4</div>
+        <div class="page-title">Flashcards</div>
+        <div class="page-sub">Clique no cartão para revelar a resposta. Repetição espaçada.</div>
+      </div>
+      <div class="flashcard-scene">
+        <div class="fc-hint">👆 Clique no cartão para virar</div>
+        <div class="flashcard-3d" id="flashcard" onclick="flipCard()">
+          <div class="flashcard-face flashcard-front">
+            <div class="fc-label">Pergunta</div>
+            <div class="fc-q" id="fc-question">Carregando...</div>
+          </div>
+          <div class="flashcard-face flashcard-back">
+            <div class="fc-label" style="color:var(--accent2)">Resposta</div>
+            <div class="fc-a" id="fc-answer"></div>
+          </div>
+        </div>
+        <div class="fc-counter" id="fc-counter">0 / 0</div>
+        <div class="fc-nav">
+          <button class="btn btn-danger" onclick="rateCard(0)">✗ Difícil</button>
+          <button class="btn btn-secondary" onclick="rateCard(1)">~ Ok</button>
+          <button class="btn btn-primary" onclick="rateCard(2)">✓ Fácil</button>
+        </div>
+        <div id="fc-summary" style="margin-top:20px;display:none">
+          <div class="card" style="text-align:center;padding:24px">
+            <div style="font-size:32px;margin-bottom:8px">🎉</div>
+            <div style="font-family:'Syne',sans-serif;font-size:20px;font-weight:700;margin-bottom:8px">Rodada Completa!</div>
+            <div id="fc-score-text" style="color:var(--muted);margin-bottom:16px"></div>
+            <button class="btn btn-primary" onclick="loadFlashcards()">↺ Nova rodada</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ MEMORY ═══ -->
+    <div id="screen-memory" class="screen">
+      <div class="page-header">
+        <div class="page-label">Módulo 4b</div>
+        <div class="page-title">Memória de Listas</div>
+        <div class="page-sub">Memorize as palavras no tempo determinado, depois escreva o máximo que lembrar.</div>
+      </div>
+      <div class="memory-stage">
+        <div id="mem-memorize-phase">
+          <div class="countdown-ring">
+            <svg viewBox="0 0 80 80" width="80" height="80">
+              <circle cx="40" cy="40" r="35"/>
+              <circle class="progress" id="mem-ring" cx="40" cy="40" r="35" stroke-dasharray="220" stroke-dashoffset="0"/>
+            </svg>
+          </div>
+          <div class="countdown-num" id="mem-countdown">15</div>
+          <div style="font-size:13px;color:var(--muted);margin-bottom:16px">segundos para memorizar</div>
+          <div class="word-grid" id="mem-words"></div>
+          <button class="btn btn-primary btn-lg" id="mem-start-btn" onclick="startMemory()">▶ Iniciar Memorização</button>
+        </div>
+        <div id="mem-recall-phase" style="display:none">
+          <div style="font-family:'Syne',sans-serif;font-size:20px;font-weight:700;margin-bottom:8px">Escreva as palavras que lembrar:</div>
+          <div class="memory-input-grid" id="mem-inputs"></div>
+          <button class="btn btn-primary btn-lg" onclick="checkMemory()">✓ Verificar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ TYPING ═══ -->
+    <div id="screen-typing" class="screen">
+      <div class="page-header">
+        <div class="page-label">Módulo 3b</div>
+        <div class="page-title">Treino de Digitação</div>
+        <div class="page-sub">Clique no texto para começar. Meça sua velocidade em WPM.</div>
+      </div>
+      <div class="typing-arena">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+          <div>
+            <div class="wpm-display" id="wpm-display">0</div>
+            <div class="wpm-label">WPM</div>
+          </div>
+          <div style="text-align:center">
+            <div class="wpm-display" style="color:var(--accent4)" id="acc-display">100%</div>
+            <div class="wpm-label">Precisão</div>
+          </div>
+          <div style="text-align:right">
+            <div class="wpm-display" style="color:var(--accent3)" id="type-time-display">–</div>
+            <div class="wpm-label">Segundos</div>
+          </div>
+        </div>
+        <div class="typing-display" id="typing-display" onclick="focusTyping()"></div>
+        <input type="text" class="typing-input-hidden" id="typing-input" oninput="onTypeInput(event)" onkeydown="onTypeKeydown(event)">
+        <div style="display:flex;gap:12px;justify-content:center;margin-top:16px">
+          <button class="btn btn-primary" onclick="newTypingText()">↺ Novo Texto</button>
+          <button class="btn btn-secondary" onclick="resetTyping()">✕ Reiniciar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ SUDOKU ═══ -->
+    <div id="screen-sudoku" class="screen">
+      <div class="page-header">
+        <div class="page-label">Módulo 6</div>
+        <div class="page-title">Sudoku</div>
+        <div class="page-sub">Treino de raciocínio lógico e eliminação sistemática.</div>
+      </div>
+      <div class="sudoku-wrap">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+          <span class="badge badge-orange" id="sudoku-status">Em jogo</span>
+          <button class="btn btn-sm btn-secondary" onclick="checkSudoku()">✓ Verificar</button>
+          <button class="btn btn-sm btn-secondary" onclick="solveSudoku()">💡 Dica</button>
+          <button class="btn btn-sm btn-secondary" onclick="initSudoku()">↺ Novo</button>
+        </div>
+        <div class="sudoku-grid" id="sudoku-grid"></div>
+        <div class="sudoku-numpad" id="sudoku-numpad"></div>
+      </div>
+    </div>
+
+    <!-- ═══ CREATIVITY ═══ -->
+    <div id="screen-creativity" class="screen">
+      <div class="page-header">
+        <div class="page-label">Módulo 8</div>
+        <div class="page-title">Criatividade</div>
+        <div class="page-sub">Pense em 10 soluções diferentes. Quantidade antes de qualidade.</div>
+      </div>
+      <div class="creativity-arena">
+        <div class="challenge-box">
+          <div style="font-size:11px;color:var(--accent3);letter-spacing:2px;text-transform:uppercase;margin-bottom:12px">Desafio</div>
+          <div class="challenge-text" id="creative-challenge">Carregando desafio...</div>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+          <div class="ideas-progress"><span id="ideas-count">0</span><span style="color:var(--muted);font-size:20px">/10</span></div>
+          <button class="btn btn-sm btn-secondary" onclick="loadCreativity()">↺ Novo desafio</button>
+        </div>
+        <ul class="ideas-list" id="ideas-list"></ul>
+        <button class="btn btn-primary" onclick="saveIdeas()" style="margin-top:16px">✓ Salvar Sessão</button>
+      </div>
+    </div>
+
+    <!-- ═══ STATS ═══ -->
+    <div id="screen-stats" class="screen">
+      <div class="page-header">
+        <div class="page-label">Progresso</div>
+        <div class="page-title">Seu Desempenho</div>
+        <div class="page-sub">Acompanhe sua evolução cognitiva ao longo do tempo.</div>
+      </div>
+      <div class="grid-2" style="margin-bottom:24px">
+        <div class="card card-accent">
+          <div style="font-size:13px;color:var(--muted);margin-bottom:12px;text-transform:uppercase;letter-spacing:1px;font-size:11px">Cálculo Mental</div>
+          <div style="font-family:'Space Mono',monospace;font-size:36px;font-weight:700;color:var(--accent)" id="stats-math-best">0</div>
+          <div style="font-size:13px;color:var(--muted)">melhor pontuação</div>
+          <div style="margin-top:8px;font-size:13px">Média: <span id="stats-math-avg" style="color:var(--text)">0</span></div>
+        </div>
+        <div class="card card-accent2">
+          <div style="font-size:13px;color:var(--muted);margin-bottom:12px;text-transform:uppercase;letter-spacing:1px;font-size:11px">Digitação</div>
+          <div style="font-family:'Space Mono',monospace;font-size:36px;font-weight:700;color:var(--accent2)" id="stats-wpm-best">0 <span style="font-size:18px">WPM</span></div>
+          <div style="font-size:13px;color:var(--muted)">melhor velocidade</div>
+          <div style="margin-top:8px;font-size:13px">Precisão: <span id="stats-wpm-acc" style="color:var(--text)">0%</span></div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-bottom:24px">
+        <div style="font-family:'Syne',sans-serif;font-size:16px;font-weight:700;margin-bottom:16px">Atividade Semanal</div>
+        <div class="habit-tracker" id="habit-tracker"></div>
+        <div style="display:flex;gap:16px;margin-top:12px;flex-wrap:wrap">
+          <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted)"><div style="width:12px;height:12px;border-radius:3px;background:rgba(0,229,255,0.2)"></div> Ativo</div>
+          <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted)"><div style="width:12px;height:12px;border-radius:3px;background:var(--surface2)"></div> Inativo</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div style="font-family:'Syne',sans-serif;font-size:16px;font-weight:700;margin-bottom:16px">Estrutura Ideal de Treino</div>
+        <table style="width:100%;border-collapse:collapse">
+          <thead><tr style="border-bottom:1px solid var(--border)">
+            <th style="text-align:left;padding:8px 0;font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:1px">Área</th>
+            <th style="text-align:right;padding:8px 0;font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:1px">Tempo</th>
+          </tr></thead>
+          <tbody id="table-body"></tbody>
+        </table>
+        <div style="margin-top:16px;padding:12px;background:rgba(0,229,255,0.05);border-radius:8px;border:1px solid rgba(0,229,255,0.1);font-size:13px;color:var(--muted)">
+          💡 <strong style="color:var(--text)">Lembre-se:</strong> Durma 7–9h, hidrate-se bem, reduza vídeos curtos e multitarefa excessiva para potencializar os resultados.
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<!-- RESULT OVERLAY -->
+<div class="result-overlay" id="result-overlay">
+  <div class="result-box">
+    <div class="result-emoji" id="res-emoji">🏆</div>
+    <div class="result-title" id="res-title">Parabéns!</div>
+    <div class="result-sub" id="res-sub">Sessão concluída</div>
+    <div class="result-stats" id="res-stats"></div>
+    <div style="display:flex;gap:12px;justify-content:center">
+      <button class="btn btn-primary" onclick="closeResult()">Continuar</button>
+      <button class="btn btn-secondary" onclick="closeResult()">Fechar</button>
+    </div>
+  </div>
+</div>
+
+<!-- NOTIFICATION -->
+<div class="notif" id="notif"></div>
+
+<script>
+// ═══════════════════════════════════════════
+// GLOBALS & STATE
+// ═══════════════════════════════════════════
+const state = {
+  mathScore: {correct:0, wrong:0, streak:0, bestStreak:0, sessions:[]},
+  wpm: {best:0, lastAcc:100, sessions:[]},
+  memory: {sessions:[]},
+  sessions: 0,
+  streak: parseInt(localStorage.getItem('np_streak')||'0'),
+  lastDate: localStorage.getItem('np_lastDate')||'',
+  habitDays: JSON.parse(localStorage.getItem('np_habit')||'[]'),
+};
+
+const QUOTES = [
+  '"O cérebro que não é exercitado enferruja. Treine-o como um músculo."',
+  '"Aprender não é um evento. É um processo contínuo de crescimento neural."',
+  '"A inteligência não é fixa — ela é construída com prática deliberada."',
+  '"Sono + Exercício + Estudo = O triângulo do alto desempenho cognitivo."',
+  '"Cada acerto matemático é uma sinapse fortalecida no seu córtex."',
+];
+
+// ═══════════════════════════════════════════
+// NAVIGATION
+// ═══════════════════════════════════════════
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('screen-'+id).classList.add('active');
+  const btns = document.querySelectorAll('.nav-btn');
+  btns.forEach(b => { if(b.getAttribute('onclick') && b.getAttribute('onclick').includes(id)) b.classList.add('active'); });
+}
+
+// ═══════════════════════════════════════════
+// CLOCK
+// ═══════════════════════════════════════════
+function updateClock() {
+  const now = new Date();
+  const h = String(now.getHours()).padStart(2,'0');
+  const m = String(now.getMinutes()).padStart(2,'0');
+  document.getElementById('hero-time').textContent = `${h}:${m}`;
+}
+setInterval(updateClock, 1000);
+updateClock();
+
+// ═══════════════════════════════════════════
+// NOTIFICATION
+// ═══════════════════════════════════════════
+function notify(msg, type='info') {
+  const el = document.getElementById('notif');
+  el.textContent = msg;
+  el.className = `notif show ${type}`;
+  setTimeout(() => el.classList.remove('show'), 3000);
+}
+
+// ═══════════════════════════════════════════
+// RESULT OVERLAY
+// ═══════════════════════════════════════════
+function showResult(emoji, title, sub, stats) {
+  document.getElementById('res-emoji').textContent = emoji;
+  document.getElementById('res-title').textContent = title;
+  document.getElementById('res-sub').textContent = sub;
+  const sc = document.getElementById('res-stats');
+  sc.innerHTML = stats.map(s => `<div class="rs"><div class="rs-val" style="color:${s.color||'var(--accent)'}">${s.val}</div><div class="rs-lbl">${s.lbl}</div></div>`).join('');
+  document.getElementById('result-overlay').classList.add('show');
+  state.sessions++;
+  document.getElementById('stat-sessions').textContent = state.sessions;
+}
+function closeResult() {
+  document.getElementById('result-overlay').classList.remove('show');
+}
+
+// ═══════════════════════════════════════════
+// SCHEDULE
+// ═══════════════════════════════════════════
+const SCHEDULE_DATA = [
+  {icon:'☀️', name:'Manhã — Ativação', desc:'Preparando o cérebro para o dia', time:'10 min', period:'morning', screen:null},
+  {icon:'🌬️', name:'Atenção & Clareza Mental', desc:'Respiração focada + Meditação simples', time:'10 min', screen:'breathing'},
+  {icon:'⚡', name:'Velocidade Mental', desc:'Cálculo mental, leitura rápida, digitação', time:'10 min', screen:'math'},
+  {icon:'🃏', name:'Memória Ativa', desc:'Flashcards, memorizar listas, repetição espaçada', time:'10–15 min', screen:'flashcards'},
+  {icon:'📚', name:'Tarde — Alto Desempenho', desc:'Aprendizado profundo', time:'45–90 min', period:'afternoon', screen:null},
+  {icon:'🧩', name:'Raciocínio Lógico', desc:'Sudoku, problemas matemáticos, algoritmos', time:'20–40 min', screen:'sudoku'},
+  {icon:'🏃', name:'Exercício Físico Cognitivo', desc:'Corrida, calistenia, artes marciais', time:'30–60 min', screen:null},
+  {icon:'🌙', name:'Noite — Consolidação', desc:'Criatividade + Linguagem + Revisão', time:'40–90 min', period:'night', screen:null},
+  {icon:'💡', name:'Criatividade', desc:'Desenho, música, escrita, projetos, ideias', time:'20–30 min', screen:'creativity'},
+  {icon:'💬', name:'Comunicação & Linguagem', desc:'Leitura em voz alta, novos vocabulários', time:'15–30 min', screen:null},
+  {icon:'🔄', name:'Revisão Mental do Dia', desc:'Lembrar o dia, revisar aprendizados, definir meta', time:'10 min', screen:null},
+];
+const schedDone = new Set();
+function renderSchedule() {
+  const list = document.getElementById('schedule-list');
+  list.innerHTML = '';
+  SCHEDULE_DATA.forEach((item, i) => {
+    const div = document.createElement('div');
+    const isDone = schedDone.has(i);
+    div.className = `sched-item ${isDone ? 'done' : ''}`;
+    if (item.period) {
+      div.style.background = 'transparent';
+      div.style.border = 'none';
+      div.style.padding = '8px 0 4px';
+      div.innerHTML = `<div style="font-family:'Syne',sans-serif;font-size:18px;font-weight:800;color:var(--muted)">${item.icon} ${item.name}</div>`;
+      list.appendChild(div);
+      return;
+    }
+    div.innerHTML = `
+      <div class="sched-icon">${item.icon}</div>
+      <div class="sched-info">
+        <div class="sched-name">${item.name}</div>
+        <div class="sched-desc">${item.desc}</div>
+      </div>
+      <div class="sched-time">${item.time}</div>
+      <div class="sched-check">${isDone ? '✓' : ''}</div>
+    `;
+    div.onclick = () => {
+      if (item.screen) showScreen(item.screen);
+      schedDone.has(i) ? schedDone.delete(i) : schedDone.add(i);
+      renderSchedule();
+    };
+    list.appendChild(div);
+  });
+}
+renderSchedule();
+
+// ═══════════════════════════════════════════
+// BREATHING
+// ═══════════════════════════════════════════
+let breathInterval = null, breathRunning = false;
+let breathPhaseIdx = 0, breathPhaseTime = 0, breathCycle = 0;
+const BREATH_PHASES = [
+  {name:'Inspire', dur:4, color:'#4FC3F7'},
+  {name:'Segure', dur:4, color:'#81C784'},
+  {name:'Expire', dur:6, color:'#FF8A65'},
+  {name:'Pause', dur:2, color:'#CE93D8'},
+];
+function toggleBreathing() {
+  if (breathRunning) {
+    clearInterval(breathInterval);
+    breathRunning = false;
+    document.getElementById('breath-btn').textContent = '▶ Continuar';
+    document.getElementById('breath-ring').classList.remove('pulse');
+  } else {
+    startBreathing();
+  }
+}
+function startBreathing() {
+  breathRunning = true;
+  document.getElementById('breath-btn').textContent = '⏸ Pausar';
+  document.getElementById('breath-ring').classList.add('pulse');
+  runBreathPhase();
+  breathInterval = setInterval(breathTick, 1000);
+}
+function runBreathPhase() {
+  const p = BREATH_PHASES[breathPhaseIdx];
+  breathPhaseTime = p.dur;
+  document.getElementById('breath-phase').textContent = p.name;
+  document.getElementById('breath-count').textContent = p.dur;
+  document.getElementById('breath-ring').style.setProperty('--dur', p.dur+'s');
+  document.getElementById('breath-inner') && (document.querySelector('.breath-inner').style.borderColor = p.color+'44');
+  document.getElementById('breath-phase').style.color = p.color;
+}
+function breathTick() {
+  breathPhaseTime--;
+  document.getElementById('breath-count').textContent = breathPhaseTime;
+  if (breathPhaseTime <= 0) {
+    breathPhaseIdx = (breathPhaseIdx + 1) % BREATH_PHASES.length;
+    if (breathPhaseIdx === 0) {
+      breathCycle++;
+      document.getElementById('breath-cycle').textContent = breathCycle;
+      if (breathCycle >= 10) {
+        clearInterval(breathInterval);
+        breathRunning = false;
+        document.getElementById('breath-btn').textContent = '▶ Iniciar';
+        document.getElementById('breath-ring').classList.remove('pulse');
+        document.getElementById('breath-phase').textContent = 'Completo!';
+        document.getElementById('breath-count').textContent = '✓';
+        document.getElementById('prog-breath').style.width = '100%';
+        showResult('🧘', 'Meditação Completa!', '10 ciclos de respiração realizados', [
+          {val: breathCycle, lbl: 'Ciclos', color:'var(--accent)'},
+          {val: '10min', lbl: 'Duração', color:'var(--accent2)'},
+        ]);
+        return;
+      }
+    }
+    runBreathPhase();
+  }
+}
+function resetBreathing() {
+  clearInterval(breathInterval);
+  breathRunning = false;
+  breathPhaseIdx = 0;
+  breathCycle = 0;
+  document.getElementById('breath-cycle').textContent = '0';
+  document.getElementById('breath-phase').textContent = 'Pronto';
+  document.getElementById('breath-count').textContent = '–';
+  document.getElementById('breath-btn').textContent = '▶ Iniciar';
+  document.getElementById('breath-ring').classList.remove('pulse');
+}
+
+// ═══════════════════════════════════════════
+// MATH
+// ═══════════════════════════════════════════
+let mathTimer = null, mathRunning = false;
+let mathTimeLeft = 60, mathCorrect = 0, mathWrong = 0, mathStreak = 0;
+let currentAnswer = 0;
+
+function generateMath() {
+  const ops = ['+','-','×'];
+  const op = ops[Math.floor(Math.random()*ops.length)];
+  let a, b, ans;
+  if (op === '×') { a = Math.floor(Math.random()*11)+2; b = Math.floor(Math.random()*11)+2; }
+  else { a = Math.floor(Math.random()*90)+10; b = Math.floor(Math.random()*90)+10; }
+  if (op === '-' && b > a) [a,b] = [b,a];
+  if (op === '+') ans = a+b; else if (op === '-') ans = a-b; else ans = a*b;
+  return {q:`${a} ${op} ${b}`, a: ans};
+}
+
+function startMath() {
+  if (mathRunning) return;
+  mathRunning = true;
+  mathTimeLeft = 60; mathCorrect = 0; mathWrong = 0; mathStreak = 0;
+  document.getElementById('math-start-btn').style.display = 'none';
+  document.getElementById('math-input').disabled = false;
+  const q = generateMath();
+  document.getElementById('math-q').textContent = q.q;
+  currentAnswer = q.a;
+  document.getElementById('math-input').value = '';
+  document.getElementById('math-input').focus();
+  updateMathDisplay();
+  mathTimer = setInterval(mathTick, 1000);
+}
+
+function mathTick() {
+  mathTimeLeft--;
+  document.getElementById('math-time').textContent = mathTimeLeft;
+  document.getElementById('math-timer-fill').style.width = (mathTimeLeft/60*100)+'%';
+  if (mathTimeLeft <= 0) endMath();
+}
+
+function mathKeydown(e) {
+  if (e.key === 'Enter' && mathRunning) {
+    const val = parseInt(document.getElementById('math-input').value);
+    const inp = document.getElementById('math-input');
+    if (val === currentAnswer) {
+      inp.classList.add('correct');
+      mathCorrect++;
+      mathStreak++;
+      setTimeout(() => {
+        inp.classList.remove('correct');
+        const q = generateMath();
+        document.getElementById('math-q').textContent = q.q;
+        currentAnswer = q.a;
+        inp.value = '';
+      }, 200);
+    } else {
+      inp.classList.add('wrong');
+      mathWrong++;
+      mathStreak = 0;
+      setTimeout(() => { inp.classList.remove('wrong'); inp.value = ''; }, 500);
+    }
+    updateMathDisplay();
+  }
+}
+
+function updateMathDisplay() {
+  document.getElementById('math-correct').textContent = mathCorrect;
+  document.getElementById('math-wrong').textContent = mathWrong;
+  document.getElementById('math-streak').textContent = mathStreak;
+}
+
+function endMath() {
+  clearInterval(mathTimer);
+  mathRunning = false;
+  document.getElementById('math-input').disabled = true;
+  document.getElementById('math-start-btn').style.display = 'inline-flex';
+  document.getElementById('math-start-btn').textContent = '↺ Jogar novamente';
+  document.getElementById('math-q').textContent = '–';
+  if (mathCorrect > (state.mathScore.best||0)) {
+    state.mathScore.best = mathCorrect;
+    localStorage.setItem('np_mathBest', mathCorrect);
+    document.getElementById('stat-math-best').textContent = mathCorrect;
+    document.getElementById('stats-math-best').textContent = mathCorrect;
+  }
+  document.getElementById('prog-math').style.width = Math.min(100, mathCorrect*5)+'%';
+  showResult('⚡', 'Cálculo Mental!', 'Sessão de 60 segundos concluída', [
+    {val: mathCorrect, lbl: 'Acertos', color:'var(--accent4)'},
+    {val: mathWrong, lbl: 'Erros', color:'var(--danger)'},
+    {val: mathStreak, lbl: 'Melhor Seq.', color:'var(--accent2)'},
+  ]);
+}
+
+// ═══════════════════════════════════════════
+// FLASHCARDS
+// ═══════════════════════════════════════════
+const CARDS = [
+  {front:"O que é Neuroplasticidade?", back:"A capacidade do cérebro de reorganizar conexões neurais ao longo da vida com base em aprendizado e experiência."},
+  {front:"Método Feynman", back:"Aprenda → Simplifique → Ensine como se fosse para uma criança → Revise as lacunas. Identifica pontos cegos no conhecimento."},
+  {front:"O que é Repetição Espaçada?", back:"Técnica que revisa conteúdo em intervalos crescentes (1d, 3d, 7d, 21d) para maximizar retenção de longo prazo."},
+  {front:"Teorema de Pitágoras", back:"a² + b² = c² — Em todo triângulo retângulo, o quadrado da hipotenusa é igual à soma dos quadrados dos catetos."},
+  {front:"O que é Flow State?", back:"Estado de imersão total em uma atividade onde o desafio e a habilidade estão em equilíbrio perfeito. Proposto por Csikszentmihalyi."},
+  {front:"Memória de Trabalho", back:"Sistema que mantém informações temporariamente (~7 itens). Base do raciocínio e compreensão. Pode ser treinada com prática."},
+  {front:"O que é Dopamina?", back:"Neurotransmissor ligado à motivação, recompensa e aprendizado. Sua antecipação impulsiona o comportamento mais que a recompensa em si."},
+  {front:"Técnica Pomodoro", back:"25min de foco total + 5min de pausa. Após 4 ciclos, pausa longa de 15–30min. Combate a procrastinação e fadiga."},
+  {front:"Sono e Memória", back:"Durante o sono (especialmente REM), o cérebro consolida memórias transferindo-as do hipocampo para o córtex de longo prazo."},
+  {front:"BDNF", back:"Brain-Derived Neurotrophic Factor — proteína liberada pelo exercício físico que estimula crescimento de neurônios e fortalece sinapses."},
+];
+let fcCards = [], fcIdx = 0, fcCorrect = 0;
+
+function loadFlashcards() {
+  fcCards = [...CARDS].sort(() => Math.random()-0.5);
+  fcIdx = 0; fcCorrect = 0;
+  document.getElementById('fc-summary').style.display = 'none';
+  document.getElementById('flashcard').style.display = 'block';
+  document.querySelector('.fc-nav').style.display = 'flex';
+  document.querySelector('.fc-hint').style.display = 'block';
+  showCard();
+}
+
+function showCard() {
+  if (fcIdx >= fcCards.length) {
+    endFlashcards(); return;
+  }
+  const c = fcCards[fcIdx];
+  document.getElementById('fc-question').textContent = c.front;
+  document.getElementById('fc-answer').textContent = c.back;
+  document.getElementById('fc-counter').textContent = `${fcIdx+1} / ${fcCards.length}`;
+  const el = document.getElementById('flashcard');
+  el.classList.remove('flipped');
+}
+
+function flipCard() {
+  document.getElementById('flashcard').classList.toggle('flipped');
+}
+
+function rateCard(rating) {
+  if (rating > 0) fcCorrect++;
+  fcIdx++;
+  showCard();
+}
+
+function endFlashcards() {
+  document.getElementById('flashcard').style.display = 'none';
+  document.querySelector('.fc-nav').style.display = 'none';
+  document.querySelector('.fc-hint').style.display = 'none';
+  document.getElementById('fc-summary').style.display = 'block';
+  const pct = Math.round(fcCorrect/fcCards.length*100);
+  document.getElementById('fc-score-text').textContent = `Acertou ${fcCorrect} de ${fcCards.length} cartões (${pct}%)`;
+  document.getElementById('prog-mem').style.width = pct+'%';
+  showResult('🃏', 'Flashcards Completos!', `${fcCards.length} cartões revisados`, [
+    {val: fcCorrect, lbl: 'Lembrados', color:'var(--accent4)'},
+    {val: `${pct}%`, lbl: 'Taxa', color:'var(--accent)'},
+  ]);
+}
+
+// ═══════════════════════════════════════════
+// MEMORY
+// ═══════════════════════════════════════════
+const WORD_LISTS_JS = [
+  ["elefante","foguete","biblioteca","oceano","violão","cristal","névoa","tsunami"],
+  ["algoritmo","constelação","fotossíntese","melanina","gravidade","paradoxo","sinfonia","equilíbrio"],
+  ["labirinto","hemisférios","neurônio","katana","horizonte","bússola","frequência","espectro"],
+];
+let memWords = [], memInterval = null, memCountdown = 15;
+
+function startMemory() {
+  memWords = [...WORD_LISTS_JS[Math.floor(Math.random()*WORD_LISTS_JS.length)]];
+  const wordGrid = document.getElementById('mem-words');
+  wordGrid.innerHTML = '';
+  memWords.forEach((w, i) => {
+    const pill = document.createElement('div');
+    pill.className = 'word-pill';
+    pill.textContent = w;
+    pill.style.animationDelay = (i*0.1)+'s';
+    wordGrid.appendChild(pill);
+  });
+  document.getElementById('mem-start-btn').disabled = true;
+  memCountdown = 15;
+  const ring = document.getElementById('mem-ring');
+  memInterval = setInterval(() => {
+    memCountdown--;
+    document.getElementById('mem-countdown').textContent = memCountdown;
+    ring.style.strokeDashoffset = (220 - (220 * memCountdown/15));
+    if (memCountdown <= 0) {
+      clearInterval(memInterval);
+      showRecallPhase();
+    }
+  }, 1000);
+}
+
+function showRecallPhase() {
+  document.getElementById('mem-memorize-phase').style.display = 'none';
+  document.getElementById('mem-recall-phase').style.display = 'block';
+  const grid = document.getElementById('mem-inputs');
+  grid.innerHTML = '';
+  memWords.forEach((_, i) => {
+    const inp = document.createElement('input');
+    inp.className = 'mem-input';
+    inp.placeholder = `Palavra ${i+1}`;
+    inp.type = 'text';
+    grid.appendChild(inp);
+  });
+}
+
+function checkMemory() {
+  const inputs = document.querySelectorAll('.mem-input');
+  let correct = 0;
+  inputs.forEach(inp => {
+    const val = inp.value.trim().toLowerCase();
+    if (memWords.map(w=>w.toLowerCase()).includes(val)) {
+      inp.classList.add('hit'); correct++;
+    } else if (val) { inp.classList.add('miss'); }
+  });
+  const pct = Math.round(correct/memWords.length*100);
+  document.getElementById('prog-mem').style.width = Math.max(parseInt(document.getElementById('prog-mem').style.width||'0'), pct)+'%';
+  showResult('🗂', 'Teste de Memória!', 'Verificação concluída', [
+    {val: correct, lbl: 'Acertos', color:'var(--accent4)'},
+    {val: memWords.length-correct, lbl: 'Esquecidos', color:'var(--danger)'},
+    {val: `${pct}%`, lbl: 'Taxa', color:'var(--accent)'},
+  ]);
+  setTimeout(() => { resetMemory(); }, 3000);
+}
+
+function resetMemory() {
+  clearInterval(memInterval);
+  document.getElementById('mem-memorize-phase').style.display = 'block';
+  document.getElementById('mem-recall-phase').style.display = 'none';
+  document.getElementById('mem-start-btn').disabled = false;
+  document.getElementById('mem-countdown').textContent = '15';
+  document.getElementById('mem-ring').style.strokeDashoffset = 0;
+  document.getElementById('mem-words').innerHTML = '';
+}
+
+// ═══════════════════════════════════════════
+// TYPING
+// ═══════════════════════════════════════════
+const TYPING_TEXTS_JS = [
+  "O cérebro humano contém aproximadamente oitenta e seis bilhões de neurônios conectados entre si.",
+  "A prática deliberada é o segredo do alto desempenho em qualquer área do conhecimento.",
+  "Dormir bem é tão importante quanto estudar para consolidar o aprendizado de longo prazo.",
+  "O exercício físico libera BDNF, uma proteína que estimula o crescimento neural no hipocampo.",
+  "Leia, resuma, ensine e aplique — este é o ciclo completo do aprendizado profundo.",
+];
+let typingText = '', typingPos = 0, typingStart = null, typingErrors = 0, typingTimer = null;
+
+function loadTypingText() {
+  typingText = TYPING_TEXTS_JS[Math.floor(Math.random()*TYPING_TEXTS_JS.length)];
+  renderTypingDisplay();
+  typingPos = 0; typingStart = null; typingErrors = 0;
+  document.getElementById('wpm-display').textContent = '0';
+  document.getElementById('acc-display').textContent = '100%';
+  document.getElementById('type-time-display').textContent = '–';
+  document.getElementById('typing-input').value = '';
+  clearInterval(typingTimer);
+}
+
+function renderTypingDisplay() {
+  const d = document.getElementById('typing-display');
+  d.innerHTML = typingText.split('').map((c,i) => {
+    if (i < typingPos) return `<span class="typed">${c}</span>`;
+    if (i === typingPos) return `<span class="current">${c}</span>`;
+    return `<span class="remaining">${c}</span>`;
+  }).join('');
+}
+
+function focusTyping() {
+  document.getElementById('typing-input').focus();
+}
+
+function onTypeInput(e) {
+  const input = document.getElementById('typing-input');
+  const typed = input.value;
+  const c = typed[typed.length-1];
+  if (!typingStart) {
+    typingStart = Date.now();
+    typingTimer = setInterval(updateTypingStats, 200);
+  }
+  if (c === typingText[typingPos]) {
+    typingPos++;
+    input.value = '';
+    if (typingPos >= typingText.length) {
+      clearInterval(typingTimer);
+      finishTyping();
+    }
+  } else {
+    typingErrors++;
+    input.value = '';
+  }
+  renderTypingDisplay();
+  updateTypingStats();
+}
+
+function onTypeKeydown(e) { if(e.key === 'Backspace') e.preventDefault(); }
+
+function updateTypingStats() {
+  if (!typingStart) return;
+  const elapsed = (Date.now()-typingStart)/1000;
+  const words = typingPos/5;
+  const wpm = Math.round(words/(elapsed/60));
+  const total = typingPos + typingErrors;
+  const acc = total > 0 ? Math.round(typingPos/total*100) : 100;
+  document.getElementById('wpm-display').textContent = wpm;
+  document.getElementById('acc-display').textContent = acc+'%';
+  document.getElementById('type-time-display').textContent = Math.round(elapsed);
+}
+
+function finishTyping() {
+  const elapsed = (Date.now()-typingStart)/1000;
+  const wpm = Math.round((typingText.length/5)/(elapsed/60));
+  const total = typingText.length + typingErrors;
+  const acc = Math.round(typingText.length/total*100);
+  if (wpm > (state.wpm.best||0)) {
+    state.wpm.best = wpm;
+    localStorage.setItem('np_wpmBest', wpm);
+    document.getElementById('stat-wpm-best').textContent = wpm;
+    document.getElementById('stats-wpm-best').textContent = wpm+' WPM';
+  }
+  state.wpm.lastAcc = acc;
+  document.getElementById('stats-wpm-acc').textContent = acc+'%';
+  document.getElementById('prog-type').style.width = Math.min(100, wpm/2)+'%';
+  showResult('⌨️', 'Digitação Concluída!', `Texto digitado com sucesso`, [
+    {val: wpm, lbl: 'WPM', color:'var(--accent2)'},
+    {val: acc+'%', lbl: 'Precisão', color:'var(--accent4)'},
+    {val: Math.round(elapsed)+'s', lbl: 'Tempo', color:'var(--accent)'},
+  ]);
+}
+
+function newTypingText() { loadTypingText(); }
+function resetTyping() { loadTypingText(); }
+
+// ═══════════════════════════════════════════
+// SUDOKU
+// ═══════════════════════════════════════════
+const PUZZLE = [
+  [5,3,0,0,7,0,0,0,0],[6,0,0,1,9,5,0,0,0],[0,9,8,0,0,0,0,6,0],
+  [8,0,0,0,6,0,0,0,3],[4,0,0,8,0,3,0,0,1],[7,0,0,0,2,0,0,0,6],
+  [0,6,0,0,0,0,2,8,0],[0,0,0,4,1,9,0,0,5],[0,0,0,0,8,0,0,7,9],
+];
+const SOLUTION = [
+  [5,3,4,6,7,8,9,1,2],[6,7,2,1,9,5,3,4,8],[1,9,8,3,4,2,5,6,7],
+  [8,5,9,7,6,1,4,2,3],[4,2,6,8,5,3,7,9,1],[7,1,3,9,2,4,8,5,6],
+  [9,6,1,5,3,7,2,8,4],[2,8,7,4,1,9,6,3,5],[3,4,5,2,8,6,1,7,9],
+];
+let sudokuBoard = [], selectedCell = null;
+
+function initSudoku() {
+  sudokuBoard = PUZZLE.map(r => [...r]);
+  renderSudoku();
+  document.getElementById('sudoku-status').textContent = 'Em jogo';
+  document.getElementById('sudoku-status').className = 'badge badge-orange';
+  // Numpad
+  const np = document.getElementById('sudoku-numpad');
+  np.innerHTML = '';
+  for(let n=1; n<=9; n++) {
+    const k = document.createElement('div');
+    k.className = 'num-key'; k.textContent = n;
+    k.onclick = () => fillCell(n);
+    np.appendChild(k);
+  }
+}
+
+function renderSudoku() {
+  const grid = document.getElementById('sudoku-grid');
+  grid.innerHTML = '';
+  for(let r=0; r<9; r++) {
+    for(let c=0; c<9; c++) {
+      const cell = document.createElement('div');
+      cell.className = 'sudoku-cell';
+      const original = PUZZLE[r][c];
+      if (original !== 0) {
+        cell.textContent = original;
+        cell.classList.add('given');
+      } else if (sudokuBoard[r][c] !== 0) {
+        cell.textContent = sudokuBoard[r][c];
+        cell.classList.add('user');
+      }
+      if (selectedCell && selectedCell[0]===r && selectedCell[1]===c) cell.classList.add('selected');
+      cell.onclick = () => { selectedCell = [r,c]; renderSudoku(); };
+      // Border for 3x3 boxes
+      if (r===2||r===5) cell.style.borderBottom = '2px solid rgba(255,255,255,0.15)';
+      grid.appendChild(cell);
+    }
+  }
+}
+
+function fillCell(n) {
+  if (!selectedCell) return;
+  const [r,c] = selectedCell;
+  if (PUZZLE[r][c] !== 0) return;
+  sudokuBoard[r][c] = n;
+  renderSudoku();
+}
+
+function checkSudoku() {
+  let allCorrect = true, hasError = false;
+  for(let r=0; r<9; r++) for(let c=0; c<9; c++) {
+    if(sudokuBoard[r][c] !== 0 && sudokuBoard[r][c] !== SOLUTION[r][c]) hasError = true;
+    if(sudokuBoard[r][c] !== SOLUTION[r][c]) allCorrect = false;
+  }
+  if(allCorrect) {
+    document.getElementById('sudoku-status').textContent = 'Resolvido! 🎉';
+    document.getElementById('sudoku-status').className = 'badge badge-green';
+    document.getElementById('prog-logic').style.width = '100%';
+    showResult('🧩', 'Sudoku Completo!', 'Raciocínio lógico exercitado', [
+      {val:'9×9', lbl:'Grade', color:'var(--accent3)'},
+      {val:'✓', lbl:'Correto', color:'var(--accent4)'},
+    ]);
+  } else if (hasError) {
+    notify('Há erros no tabuleiro. Continue tentando!', 'error');
+  } else {
+    notify('Continue preenchendo...', 'info');
+  }
+}
+
+function solveSudoku() {
+  // Fill one random empty correct cell
+  const empties = [];
+  for(let r=0; r<9; r++) for(let c=0; c<9; c++) if(PUZZLE[r][c]===0 && sudokuBoard[r][c]===0) empties.push([r,c]);
+  if(empties.length === 0) return;
+  const [r,c] = empties[Math.floor(Math.random()*empties.length)];
+  sudokuBoard[r][c] = SOLUTION[r][c];
+  selectedCell = [r,c];
+  renderSudoku();
+  notify(`Dica: célula (${r+1},${c+1}) = ${SOLUTION[r][c]}`, 'info');
+}
+
+// ═══════════════════════════════════════════
+// CREATIVITY
+// ═══════════════════════════════════════════
+const CHALLENGES = [
+  "Liste 10 usos alternativos para um clipe de papel.",
+  "Invente 10 formas de melhorar um guarda-chuva.",
+  "Crie 10 nomes para uma startup de tecnologia cognitiva.",
+  "Pense em 10 soluções para reduzir a procrastinação.",
+  "Imagine 10 formas de tornar o aprendizado mais divertido.",
+  "Liste 10 aplicativos que ainda não existem mas deveriam.",
+  "Crie 10 frases motivacionais originais sobre o cérebro.",
+  "Invente 10 novas palavras para conceitos sem tradução.",
+];
+
+function loadCreativity() {
+  const ch = CHALLENGES[Math.floor(Math.random()*CHALLENGES.length)];
+  document.getElementById('creative-challenge').textContent = ch;
+  const list = document.getElementById('ideas-list');
+  list.innerHTML = '';
+  for(let i=1; i<=10; i++) {
+    const row = document.createElement('li');
+    row.className = 'idea-row';
+    row.innerHTML = `<span class="idea-num">${String(i).padStart(2,'0')}</span><input class="idea-input" type="text" placeholder="Ideia ${i}..." oninput="countIdeas()">`;
+    list.appendChild(row);
+  }
+  document.getElementById('ideas-count').textContent = '0';
+}
+
+function countIdeas() {
+  const filled = document.querySelectorAll('.idea-input');
+  let count = 0;
+  filled.forEach(i => { if(i.value.trim()) count++; });
+  document.getElementById('ideas-count').textContent = count;
+  if(count >= 10) {
+    document.getElementById('prog-create').style.width = '100%';
+    notify('🎉 10 ideias criadas! Excelente criatividade!', 'success');
+  }
+}
+
+function saveIdeas() {
+  const filled = [...document.querySelectorAll('.idea-input')].filter(i=>i.value.trim()).length;
+  if(filled === 0) { notify('Escreva pelo menos uma ideia primeiro!', 'error'); return; }
+  showResult('💡', 'Sessão Criativa!', 'Ideias registradas com sucesso', [
+    {val: filled, lbl: 'Ideias', color:'var(--accent3)'},
+    {val: filled>=10?'100%':`${filled*10}%`, lbl: 'Completo', color:'var(--accent)'},
+  ]);
+}
+
+// ═══════════════════════════════════════════
+// STATS
+// ═══════════════════════════════════════════
+function initStats() {
+  const days = ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];
+  const today = new Date().getDay();
+  const tracker = document.getElementById('habit-tracker');
+  tracker.innerHTML = '';
+  for(let w=0; w<4; w++) {
+    for(let d=0; d<7; d++) {
+      const idx = w*7+d;
+      const dot = document.createElement('div');
+      dot.className = 'day-dot';
+      if(w===3 && d===today) dot.classList.add('active');
+      dot.textContent = w===0 ? days[d][0] : '';
+      dot.onclick = () => dot.classList.toggle('active');
+      tracker.appendChild(dot);
+    }
+  }
+  const TABLE = [
+    ['🌬️ Foco / Meditação','10 min'],
+    ['🃏 Memória','15 min'],
+    ['🧩 Lógica','30 min'],
+    ['📚 Estudo profundo','1h+'],
+    ['🏃 Exercício físico','30–60 min'],
+    ['💡 Criatividade','20 min'],
+    ['💬 Linguagem','20 min'],
+  ];
+  document.getElementById('table-body').innerHTML = TABLE.map(([a,t]) =>
+    `<tr style="border-bottom:1px solid var(--border)"><td style="padding:10px 0;font-size:14px">${a}</td><td style="text-align:right;padding:10px 0;font-family:'Space Mono',monospace;font-size:13px;color:var(--accent)">${t}</td></tr>`
+  ).join('');
+  // Load saved stats
+  const mb = parseInt(localStorage.getItem('np_mathBest')||'0');
+  const wb = parseInt(localStorage.getItem('np_wpmBest')||'0');
+  document.getElementById('stat-math-best').textContent = mb;
+  document.getElementById('stats-math-best').textContent = mb;
+  document.getElementById('stat-wpm-best').textContent = wb;
+  document.getElementById('stats-wpm-best').textContent = wb + (wb?' WPM':'');
+  document.getElementById('stat-streak').textContent = state.streak;
+}
+
+// ═══════════════════════════════════════════
+// DAILY QUOTE
+// ═══════════════════════════════════════════
+document.getElementById('daily-quote').textContent = QUOTES[new Date().getDay() % QUOTES.length];
+
+// ═══════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════
+loadFlashcards();
+loadTypingText();
+initSudoku();
+loadCreativity();
+initStats();
+</script>
+</body>
+</html>

@@ -1,0 +1,8 @@
+# ── TYPING TEXTS ───────────────────────────────────────────────
+TYPING_TEXTS = [
+    "O cérebro humano contém aproximadamente 86 bilhões de neurônios conectados.",
+    "A prática deliberada é o segredo do alto desempenho em qualquer área.",
+    "Dormir bem é tão importante quanto estudar para consolidar o aprendizado.",
+    "O exercício físico libera BDNF, uma proteína que estimula o crescimento neural.",
+    "Leia, resuma, ensine e aplique — este é o ciclo do aprendizado profundo.",
+]

@@ -1,0 +1,13 @@
+# ── FLASHCARDS ─────────────────────────────────────────────────
+FLASHCARDS = [
+    {"front": "O que é Neuroplasticidade?", "back": "A capacidade do cérebro de reorganizar conexões neurais ao longo da vida."},
+    {"front": "Método Feynman", "back": "Aprenda → Simplifique → Ensine como se fosse para uma criança → Revise as lacunas."},
+    {"front": "O que é Repetição Espaçada?", "back": "Técnica de estudo que revisa o conteúdo em intervalos crescentes para reforçar a memória de longo prazo."},
+    {"front": "Teorema de Pitágoras", "back": "a² + b² = c² — em todo triângulo retângulo, o quadrado da hipotenusa é igual à soma dos quadrados dos catetos."},
+    {"front": "O que é Flow State?", "back": "Estado de imersão total em uma atividade, onde o desafio e a habilidade estão em equilíbrio perfeito."},
+    {"front": "Memória de Trabalho", "back": "Sistema cognitivo que mantém informações temporariamente para uso imediato. Capacidade: ~7 itens simultaneamente."},
+    {"front": "O que é Dopamina?", "back": "Neurotransmissor associado à motivação, recompensa e aprendizado. Essencial para formar novos hábitos."},
+    {"front": "Técnica Pomodoro", "back": "25 minutos de foco total + 5 minutos de pausa. Após 4 ciclos, pausa longa de 15–30 min."},
+    {"front": "O que é Sono REM?", "back": "Fase do sono onde ocorre consolidação de memórias e processamento emocional. Essencial para aprendizado."},
+    {"front": "Inteligência Fluida vs Cristalizada", "back": "Fluida: raciocinar sobre novos problemas. Cristalizada: conhecimento acumulado e experiência. Ambas se complementam."},
+]

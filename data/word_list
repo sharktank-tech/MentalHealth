@@ -1,0 +1,6 @@
+# ── WORD LIST (memory training) ────────────────────────────────
+WORD_LISTS = [
+    ["elefante", "foguete", "biblioteca", "oceano", "violão", "cristal", "névoa", "tsunami"],
+    ["algoritmo", "constelação", "fotossíntese", "melanina", "gravidade", "paradoxo", "sinfonia", "equilíbrio"],
+    ["labirinto", "hemisférios", "neurônio", "katana", "horizonte", "bússola", "frequência", "espectro"],
+]

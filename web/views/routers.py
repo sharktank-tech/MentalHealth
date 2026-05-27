@@ -1,12 +1,13 @@
 from flask import  render_template, jsonify, request, Blueprint
 from web.modules.math_questions import generate_math_question
 import random
+from config import Config  as cf
 
 main_blueprint = Blueprint('main', __name__)
 
-FLASHCARDS = open("/home/danilo/PycharmProjects/MentalHealth/data/flashcards")
-WORD_LISTS = open("/home/danilo/PycharmProjects/MentalHealth/data/word_list")
-TYPING_TEXTS = open("/home/danilo/PycharmProjects/MentalHealth/data/typing_texts")
+FLASHCARDS = cf.FLASHCARDS
+WORD_LISTS = cf.WORD_LISTS
+TYPING_TEXTS = cf.TYPING_TEXTS
 
 # ── ROUTES ────────────────────────────────────────────────────
 # === Rota para carregar a pagina principal  ====

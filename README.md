@@ -1,6 +1,6 @@
-# MentalHealth
+# Mental Peak
 
-O **MentalHealth** é uma plataforma de treino cognitivo para melhorar a performaçe mental.
+O **Mental Peak** é uma plataforma de treino cognitivo para melhorar a performaçe mental.
 
 ## Demonstração
 Acesse a aplicação: [mental-health-two-fawn.vercel.app]([(https://mental-health-two-fawn.vercel.app/))
